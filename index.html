@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tyler winters</title>
+<meta name="description" content="Tyler Winters: engineer. Resume, projects, and contact.">
+<style>
+  :root {
+    --bg: #ffffff;
+    --text: #000000;
+    --muted: #555555;
+    --folder: #0000ee;
+    --file: #008000;
+    --rule: #cccccc;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #000000;
+      --text: #f2f2f2;
+      --muted: #9a9a9a;
+      --folder: #6c8cff;
+      --file: #4ade80;
+      --rule: #333333;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  html { background: var(--bg); }
+
+  body {
+    margin: 0;
+    padding: 28px 18px 80px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    font-size: 16px;
+    line-height: 1.5;
+    max-width: 780px;
+  }
+
+  pre {
+    margin: 0;
+    font: inherit;
+    white-space: pre;
+    overflow-x: auto;
+  }
+
+  a { text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+    outline: 2px solid var(--folder);
+    outline-offset: 2px;
+  }
+
+  .root { font-weight: 700; }
+  .dir { color: var(--folder); }
+  .file { color: var(--file); }
+  .muted { color: var(--muted); }
+
+  /* "terminal" header on file pages */
+  .prompt { color: var(--muted); margin: 0 0 20px; overflow-wrap: anywhere; }
+  .prompt b { color: var(--text); font-weight: 700; }
+
+  .doc { white-space: normal; }
+  .doc h2 {
+    font-size: 1em;
+    font-weight: 700;
+    margin: 28px 0 6px;
+  }
+  .doc h2:first-child { margin-top: 0; }
+  .doc p { margin: 0 0 12px; max-width: 70ch; }
+  .doc ul { margin: 0 0 12px; padding-left: 2ch; list-style: none; max-width: 70ch; }
+  .doc li { margin-bottom: 4px; text-indent: -2ch; padding-left: 2ch; }
+  .doc li::before { content: "- "; color: var(--muted); }
+  .doc hr { border: 0; border-top: 1px dashed var(--rule); margin: 22px 0; }
+  .doc a { color: var(--folder); text-decoration: underline; }
+  .doc .entry-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 16px; font-weight: 700; margin-bottom: 4px; }
+  .doc .entry-head span:last-child { font-weight: 400; color: var(--muted); }
+
+  .back { display: inline-block; margin-top: 36px; color: var(--folder); }
+
+  /* contact form */
+  form { max-width: 560px; margin-top: 18px; }
+  label { display: block; margin: 14px 0 4px; font-weight: 700; }
+  input, textarea {
+    width: 100%;
+    font: inherit;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--text);
+    border-radius: 0;
+    padding: 8px 10px;
+  }
+  textarea { min-height: 150px; resize: vertical; }
+  button {
+    margin-top: 16px;
+    font: inherit;
+    font-weight: 700;
+    color: var(--bg);
+    background: var(--text);
+    border: 1px solid var(--text);
+    border-radius: 0;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+  button:hover { background: var(--bg); color: var(--text); }
+  .note { color: var(--muted); font-size: 0.9em; margin-top: 12px; max-width: 60ch; }
+
+  @media (max-width: 480px) {
+    body { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+<main id="app"></main>
+
+<script>
+/* ==========================================================
+   EDIT THIS SECTION: your details live here
+   ========================================================== */
+const SITE = {
+  name: "tyler winters",
+  email: "winters.ty@Northeastern.edu",            // <-- change this
+  github: "https://github.com/tylerwinters4", // <-- change this
+  linkedin: "https://linkedin.com/in/tylerwinters4", // <-- change this
+  location: "Boston, MA",
+  resumePdf: "resume.pdf"                      // drop a PDF named this in the repo, or delete the link below
+};
+
+/* ==========================================================
+   CONTENT: each folder holds files; each file is a function
+   that returns HTML. Add or remove entries freely and the
+   tree rebuilds itself.
+   ========================================================== */
+const FOLDERS = [
+  {
+    dir: "about_me",
+    files: [
+      {
+        name: "intro",
+        render: () => `
+          <div class="doc">
+            <h2>hi, i’m tyler.</h2>
+            <p>I’m an engineer based in ${SITE.location}. I like building things that move, measure, and run reliably: hardware, firmware, and the software that ties them together.</p>
+            <p>Right now I’m focused on embedded systems, controls, and design for manufacturability. I care about clear requirements, good documentation, and prototypes that get tested early.</p>
+            <h2>tools i use</h2>
+            <ul>
+              <li>CAD: SolidWorks, AutoCAD</li>
+              <li>Electronics: Arduino, Raspberry Pi</li>
+              <li>Code: C/C++, Python, MATLAB</li>
+          
+              <li>Fabrication: 3D printing, laser cutting, soldering, machine shop basics</li>
+            </ul>
+            <h2>find me</h2>
+            <ul>
+              <li><a href="${SITE.github}">github</a></li>
+              <li><a href="${SITE.linkedin}">linkedin</a></li>
+              <li><a href="#/contact/email_me.txt">email me</a></li>
+            </ul>
+          </div>`
+      }
+    ]
+  },
+  {
+    dir: "resume",
+    files: [
+      {
+        name: "resume.",
+        render: () => `
+          <div class="doc">
+            <p><a href="${SITE.resumePdf}">download resume.pdf</a></p>
+
+            <h2>education</h2>
+            <div class="entry-head"><span>B.S. Mechanical Engineering</span><span>2019 - 2023</span></div>
+            <p>University Name, City, State<br>GPA: 3.x / 4.0</p>
+            <ul>
+              <li>Relevant coursework: Controls, Thermodynamics, Machine Design, Embedded Systems</li>
+              <li>Senior capstone: short description of your capstone project</li>
+            </ul>
+
+            <hr>
+            <h2>experience</h2>
+
+            <div class="entry-head"><span>Engineer II, Company Name</span><span>2024 - present</span></div>
+            <ul>
+              <li>Led design of [thing] that reduced [cost / weight / cycle time] by [X]%.</li>
+              <li>Built a test fixture and data pipeline in Python that cut validation time from [X] to [Y].</li>
+              <li>Worked with manufacturing to release [N] drawings and resolve [N] DFM issues.</li>
+            </ul>
+
+            <div class="entry-head"><span>Engineering Intern, Company Name</span><span>Summer 2022</span></div>
+            <ul>
+              <li>Designed and prototyped [component]; ran FEA to confirm a safety factor of [X].</li>
+              <li>Wrote firmware in C for [microcontroller] to [do something measurable].</li>
+            </ul>
+
+            <hr>
+            <h2>skills</h2>
+            <ul>
+              <li>Design: GD&amp;T, DFM/DFA, FEA, tolerance stack-ups</li>
+              <li>Electronics: schematic capture, PCB layout, sensor integration, bring-up and debug</li>
+              <li>Software: C/C++, Python, MATLAB, Git, Linux</li>
+              <li>Process: FMEA, test planning, technical documentation</li>
+            </ul>
+
+            <hr>
+            <h2>certifications</h2>
+            <ul>
+              <li>Fundamentals of Engineering (FE) exam, passed 2023</li>
+              <li>Certified SolidWorks Associate (CSWA)</li>
+            </ul>
+          </div>`
+      }
+    ]
+  },
+  {
+    dir: "projects",
+    files: [
+      {
+        name: "quadruped_robot",
+        render: () => `
+          <div class="doc">
+            <h2>line following rover</h2>
+            <p class="muted">stack: C++, STM32, PID control, KiCad</p>
+            <p>A two-wheeled rover that follows a line using an array of reflectance sensors and a PID loop running at 1 kHz. I designed the control board, wrote the firmware, and tuned the controller from logged step-response data.</p>
+            <ul>
+              <li>Custom 2-layer PCB with motor drivers and a sensor array</li>
+              <li>Completed a 12 m course in [X] seconds</li>
+              <li>Source and schematics: <a href="${SITE.github}">github</a></li>
+            </ul>
+          </div>`
+      },
+      {
+        name: "data_logger_pcb.txt",
+        render: () => `
+          <div class="doc">
+            <h2>4-channel data logger</h2>
+            <p class="muted">stack: KiCad, ADS1115, SD card, Python</p>
+            <p>A battery-powered logger that records four analog sensor channels to an SD card with timestamps. Includes a Python script that turns the logs into plots for quick review.</p>
+            <ul>
+              <li>16-bit ADC, [X] hour battery life</li>
+              <li>Enclosure designed in Fusion 360 and 3D printed</li>
+              <li>Source and schematics: <a href="${SITE.github}">github</a></li>
+            </ul>
+          </div>`
+      },
+      {
+        name: "beam_analysis_tool.txt",
+        render: () => `
+          <div class="doc">
+            <h2>beam analysis tool</h2>
+            <p class="muted">stack: Python, NumPy, Matplotlib</p>
+            <p>A command-line tool that computes deflection, shear, and bending moment for beams under common loading cases, and checks the results against hand calculations and ANSYS.</p>
+            <ul>
+              <li>Matches ANSYS results within [X]%</li>
+              <li>Used by [N] classmates for coursework</li>
+              <li>Source: <a href="${SITE.github}">github</a></li>
+            </ul>
+          </div>`
+      }
+    ]
+  },
+  {
+    dir: "contact",
+    files: [
+      {
+        name: "email_me.txt",
+        render: () => `
+          <div class="doc">
+            <p>Questions, project ideas, or job opportunities: write to <a href="mailto:${SITE.email}">${SITE.email}</a>, or use the form below.</p>
+            <form id="mailform" novalidate>
+              <label for="f-name">your name</label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required>
+
+              <label for="f-email">your email</label>
+              <input id="f-email" name="email" type="email" autocomplete="email" required>
+
+              <label for="f-subject">subject</label>
+              <input id="f-subject" name="subject" type="text">
+
+              <label for="f-message">message</label>
+              <textarea id="f-message" name="message" required></textarea>
+
+              <button type="submit">open in email app</button>
+              <p class="note" id="form-status" role="status">This opens a pre-filled message in your email app. Nothing is sent until you press send there.</p>
+            </form>
+          </div>`,
+        after: () => {
+          const form = document.getElementById("mailform");
+          const status = document.getElementById("form-status");
+          form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const name = form.name.value.trim();
+            const from = form.email.value.trim();
+            const message = form.message.value.trim();
+            if (!name || !from || !message) {
+              status.textContent = "Fill in your name, email, and message first.";
+              return;
+            }
+            const subject = form.subject.value.trim() || "Message from " + name;
+            const body = message + "\n\n" + name + "\n" + from;
+            window.location.href =
+              "mailto:" + SITE.email +
+              "?subject=" + encodeURIComponent(subject) +
+              "&body=" + encodeURIComponent(body);
+            status.textContent = "Opening your email app. If nothing happens, email " + SITE.email + " directly.";
+          });
+        }
+      }
+    ]
+  }
+];
+
+/* ==========================================================
+   ENGINE: draws the tree and shows files. No need to edit.
+   ========================================================== */
+const app = document.getElementById("app");
+
+function esc(s) {
+  return s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+}
+
+function renderTree() {
+  document.title = SITE.name;
+  let out = `<span class="root">${esc(SITE.name)}</span>\n`;
+  FOLDERS.forEach((folder, i) => {
+    const lastFolder = i === FOLDERS.length - 1;
+    out += `${lastFolder ? "└── " : "├── "}<span class="dir">${esc(folder.dir)}</span>\n`;
+    folder.files.forEach((file, j) => {
+      const lastFile = j === folder.files.length - 1;
+      const trunk = lastFolder ? "    " : "│   ";
+      out += `${trunk}${lastFile ? "└── " : "├── "}<a class="file" href="#/${folder.dir}/${file.name}">${esc(file.name)}</a>\n`;
+    });
+  });
+  app.innerHTML = `<pre aria-label="site directory">${out}</pre>`;
+}
+
+function renderFile(dirName, fileName) {
+  const folder = FOLDERS.find((f) => f.dir === dirName);
+  const file = folder && folder.files.find((f) => f.name === fileName);
+  if (!file) { renderTree(); return; }
+  document.title = `${fileName} | ${SITE.name}`;
+  app.innerHTML = `
+    <p class="prompt">~/${esc(dirName)}$ <b>cat ${esc(fileName)}</b></p>
+    ${file.render()}
+    <a class="back" href="#/">cd ..</a>`;
+  if (file.after) file.after();
+}
+
+function route() {
+  const parts = location.hash.replace(/^#\/?/, "").split("/").filter(Boolean);
+  if (parts.length === 2) renderFile(decodeURIComponent(parts[0]), decodeURIComponent(parts[1]));
+  else renderTree();
+  window.scrollTo(0, 0);
+}
+
+window.addEventListener("hashchange", route);
+route();
+</script>
+</body>
+</html>
