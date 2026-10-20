@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>tyler winters</title>
+<title>Tyler Winters</title>
 <meta name="description" content="Tyler Winters: engineer. Resume, projects, and contact.">
 <style>
   :root {
@@ -121,10 +121,10 @@
    EDIT THIS SECTION: your details live here
    ========================================================== */
 const SITE = {
-  name: "tyler winters",
-  email: "winters.ty@Northeastern.edu",            // <-- change this
-  github: "https://github.com/tylerwinters4", // <-- change this
-  linkedin: "https://linkedin.com/in/tylerwinters4", // <-- change this
+  name: "Tyler Winters",
+  email: "winters.ty@northeastern.edu",
+  github: "https://github.com/tylerwinters4",
+  linkedin: "https://linkedin.com/in/tylerwinters4",
   location: "Boston, MA",
   resumePdf: "resume.pdf"                      // drop a PDF named this in the repo, or delete the link below
 };
@@ -136,22 +136,22 @@ const SITE = {
    ========================================================== */
 const FOLDERS = [
   {
-    dir: "about_me",
+    dir: "about me",
     files: [
       {
-        name: "intro",
+        name: "intro.txt",
         render: () => `
           <div class="doc">
-            <h2>hi, i’m tyler.</h2>
-            <p>I’m an engineer based in ${SITE.location}. I like building things that move, measure, and run reliably: hardware, firmware, and the software that ties them together.</p>
-            <p>Right now I’m focused on embedded systems, controls, and design for manufacturability. I care about clear requirements, good documentation, and prototypes that get tested early.</p>
+            <h2>hi, i’m Tyler.</h2>
+            <p>I’m a 2nd-year mechanical engineering student at Northeastern University based in ${SITE.location}. I love designing things that can be used in real-life situations to help people in their everyday lives.</p>
+            <p>Right now I’m focused on CAD design, electronics, and manufacturing. I care about meeting client requirements, testing prototypes, and learning new skills.</p>
             <h2>tools i use</h2>
             <ul>
-              <li>CAD: SolidWorks, AutoCAD</li>
-              <li>Electronics: Arduino, Raspberry Pi</li>
-              <li>Code: C/C++, Python, MATLAB</li>
-          
-              <li>Fabrication: 3D printing, laser cutting, soldering, machine shop basics</li>
+              <li>CAD &amp; 3D: SolidWorks, AutoCAD, Blender</li>
+              <li>Electronics: Arduino Uno, Raspberry Pi, LED lighting systems</li>
+              <li>Code: Python, C, C++</li>
+              <li>Fabrication: 3D printing, laser cutting</li>
+              <li>Media: After Effects, Photoshop</li>
             </ul>
             <h2>find me</h2>
             <ul>
@@ -160,103 +160,133 @@ const FOLDERS = [
               <li><a href="#/contact/email_me.txt">email me</a></li>
             </ul>
           </div>`
+      },
+      {
+        name: "education.txt",
+        render: () => `
+          <div class="doc">
+            <div class="entry-head"><span>Northeastern University</span><span>expected May 2029</span></div>
+            <p class="muted">B.S. Mechanical Engineering · Boston, MA · GPA 3.91</p>
+            <h2>relevant coursework</h2>
+            <ul>
+              <li>Thermodynamics</li>
+              <li>Fluid Mechanics (in progress)</li>
+              <li>Mechanics of Materials (in progress)</li>
+              <li>Statics</li>
+              <li>Differential Equations</li>
+              <li>Engineering Cornerstone</li>
+            </ul>
+          </div>`
       }
     ]
   },
   {
     dir: "resume",
     files: [
-      {
-        name: "resume.",
-        render: () => `
-          <div class="doc">
-            <p><a href="${SITE.resumePdf}">download resume.pdf</a></p>
-
-            <h2>education</h2>
-            <div class="entry-head"><span>B.S. Mechanical Engineering</span><span>2019 - 2023</span></div>
-            <p>University Name, City, State<br>GPA: 3.x / 4.0</p>
-            <ul>
-              <li>Relevant coursework: Controls, Thermodynamics, Machine Design, Embedded Systems</li>
-              <li>Senior capstone: short description of your capstone project</li>
-            </ul>
-
-            <hr>
-            <h2>experience</h2>
-
-            <div class="entry-head"><span>Engineer II, Company Name</span><span>2024 - present</span></div>
-            <ul>
-              <li>Led design of [thing] that reduced [cost / weight / cycle time] by [X]%.</li>
-              <li>Built a test fixture and data pipeline in Python that cut validation time from [X] to [Y].</li>
-              <li>Worked with manufacturing to release [N] drawings and resolve [N] DFM issues.</li>
-            </ul>
-
-            <div class="entry-head"><span>Engineering Intern, Company Name</span><span>Summer 2022</span></div>
-            <ul>
-              <li>Designed and prototyped [component]; ran FEA to confirm a safety factor of [X].</li>
-              <li>Wrote firmware in C for [microcontroller] to [do something measurable].</li>
-            </ul>
-
-            <hr>
-            <h2>skills</h2>
-            <ul>
-              <li>Design: GD&amp;T, DFM/DFA, FEA, tolerance stack-ups</li>
-              <li>Electronics: schematic capture, PCB layout, sensor integration, bring-up and debug</li>
-              <li>Software: C/C++, Python, MATLAB, Git, Linux</li>
-              <li>Process: FMEA, test planning, technical documentation</li>
-            </ul>
-
-            <hr>
-            <h2>certifications</h2>
-            <ul>
-              <li>Fundamentals of Engineering (FE) exam, passed 2023</li>
-              <li>Certified SolidWorks Associate (CSWA)</li>
-            </ul>
-          </div>`
-      }
+      // opens the PDF directly in a new tab (no page in between)
+      { name: "resume.pdf", href: SITE.resumePdf }
     ]
   },
   {
     dir: "projects",
     files: [
       {
-        name: "quadruped_robot",
+        name: "quadruped_robot.txt",
         render: () => `
           <div class="doc">
-            <h2>line following rover</h2>
-            <p class="muted">stack: C++, STM32, PID control, KiCad</p>
-            <p>A two-wheeled rover that follows a line using an array of reflectance sensors and a PID loop running at 1 kHz. I designed the control board, wrote the firmware, and tuned the controller from logged step-response data.</p>
+            <div class="entry-head"><span>quadruped walking robot</span><span>Sept 2026 – present</span></div>
+            <p class="muted">3-person team · stack: SolidWorks, Arduino, C++</p>
+            <p>A four-legged robot that walks using a controller and servo motors built into its legs and body. It also has a screen that displays text and designs based on the action the robot is performing. I designed the legs and am currently working on the body.</p>
             <ul>
-              <li>Custom 2-layer PCB with motor drivers and a sensor array</li>
-              <li>Completed a 12 m course in [X] seconds</li>
-              <li>Source and schematics: <a href="${SITE.github}">github</a></li>
+              <li>Designed the motorized legs in SolidWorks</li>
+              <li>Programmed servo motor orientations to move the legs</li>
             </ul>
           </div>`
       },
       {
-        name: "data_logger_pcb.txt",
+        name: "volleyball_dispenser.txt",
         render: () => `
           <div class="doc">
-            <h2>4-channel data logger</h2>
-            <p class="muted">stack: KiCad, ADS1115, SD card, Python</p>
-            <p>A battery-powered logger that records four analog sensor channels to an SD card with timestamps. Includes a Python script that turns the logs into plots for quick review.</p>
+            <div class="entry-head"><span>automatic volleyball dispenser</span><span>June – Aug 2026</span></div>
+            <p class="muted">personal project · stack: Arduino, PVC piping</p>
+            <p>A fully automatic ball dispenser: a sensor detects when a ball is needed and a motorized system feeds the next one through a PVC pipe structure.</p>
             <ul>
-              <li>16-bit ADC, [X] hour battery life</li>
-              <li>Enclosure designed in Fusion 360 and 3D printed</li>
-              <li>Source and schematics: <a href="${SITE.github}">github</a></li>
+              <li>Built the ball sensor and motorized dispenser with Arduino firmware</li>
+              <li>Cut costs by over 90% compared to market options, making a cheaper alternative for recreational use</li>
+              <li>Designed a backup button-triggered system to handle light fluctuations that affected the sensor</li>
             </ul>
           </div>`
       },
       {
-        name: "beam_analysis_tool.txt",
+        name: "everglades_hide_and_seek.txt",
         render: () => `
           <div class="doc">
-            <h2>beam analysis tool</h2>
-            <p class="muted">stack: Python, NumPy, Matplotlib</p>
-            <p>A command-line tool that computes deflection, shear, and bending moment for beams under common loading cases, and checks the results against hand calculations and ANSYS.</p>
+            <div class="entry-head"><span>everglades 3D hide and seek game</span><span>Jan – May 2026</span></div>
+            <p class="muted">cornerstone group project · stack: AutoCAD, 3D printing, Raspberry Pi</p>
+            <p>An interactive replica of the Everglades where kids search for hidden animals, exhibited at the Boston Children’s Museum.</p>
             <ul>
-              <li>Matches ANSYS results within [X]%</li>
-              <li>Used by [N] classmates for coursework</li>
-              <li>Source: <a href="${SITE.github}">github</a></li>
+              <li>Modeled a 3-layer cardboard and papier-mâché replica of the Everglades in AutoCAD</li>
+              <li>Presented the exhibit to 28 children at the Boston Children’s Museum</li>
+              <li>3D-printed 22 animals and hid them throughout the structure for the children to find</li>
+              <li>Created rock formations, painted the model, added grass, and designed a water-themed marble run for interactivity</li>
+              <li>Programmed and wired an interior lighting system using Raspberry Pi firmware and LED strips</li>
+            </ul>
+          </div>`
+      },
+      {
+        name: "force_transport_system.txt",
+        render: () => `
+          <div class="doc">
+            <div class="entry-head"><span>force transport system</span><span>Sept – Dec 2025</span></div>
+            <p class="muted">cornerstone group project · stack: AutoCAD, laser cutting, Raspberry Pi</p>
+            <p>A fully automatic system that moves an object through a chain of mechanical stages.</p>
+            <ul>
+              <li>Designed the system in AutoCAD and built it from laser-cut materials</li>
+              <li>Implemented 4 mechanical components: a pulley, inclined plane, funnel, and hinge</li>
+              <li>Programmed a button and lighting system with Raspberry Pi firmware to sync with the end of our section</li>
+            </ul>
+          </div>`
+      }
+    ]
+  },
+  {
+    dir: "experience",
+    files: [
+      {
+        name: "video_editor.txt",
+        render: () => `
+          <div class="doc">
+            <div class="entry-head"><span>video editor</span><span>Sept 2023 – present</span></div>
+            <p class="muted">YouTube, Instagram</p>
+            <ul>
+              <li>Produced professional-level videos that grew viewership by over 250,000 viewers across platforms</li>
+              <li>Designed thumbnails that increased user interaction by over 60%</li>
+              <li>Used Blender 3D modeling and animation to boost viewer retention</li>
+              <li>Scripted 300+ short-form videos that led to a 95% follower increase</li>
+            </ul>
+          </div>`
+      },
+      {
+        name: "academic_tutor.txt",
+        render: () => `
+          <div class="doc">
+            <div class="entry-head"><span>academic tutor</span><span>Sept 2022 – Aug 2025</span></div>
+            <p class="muted">Hillmont Tutors · Ellicott City, MD</p>
+            <ul>
+              <li>Designed over 500 math problems for six 4th- and 5th-graders to help them move into advanced courses in middle school</li>
+              <li>Wrote a free study guide for students in similar positions, used by over 200 people</li>
+            </ul>
+          </div>`
+      },
+      {
+        name: "volunteering.txt",
+        render: () => `
+          <div class="doc">
+            <div class="entry-head"><span>animal care and organization</span><span>Sept 2023 – Dec 2025</span></div>
+            <p class="muted">Cats on the Grove · Catonsville, MD</p>
+            <ul>
+              <li>Led food management for a colony of around 20 feral cats</li>
+              <li>Created plans and schedules and stocked inventory for the community</li>
             </ul>
           </div>`
       }
@@ -331,7 +361,10 @@ function renderTree() {
     folder.files.forEach((file, j) => {
       const lastFile = j === folder.files.length - 1;
       const trunk = lastFolder ? "    " : "│   ";
-      out += `${trunk}${lastFile ? "└── " : "├── "}<a class="file" href="#/${folder.dir}/${file.name}">${esc(file.name)}</a>\n`;
+      const link = file.href
+        ? `<a class="file" href="${file.href}" target="_blank" rel="noopener">${esc(file.name)}</a>`
+        : `<a class="file" href="#/${encodeURIComponent(folder.dir)}/${encodeURIComponent(file.name)}">${esc(file.name)}</a>`;
+      out += `${trunk}${lastFile ? "└── " : "├── "}${link}\n`;
     });
   });
   app.innerHTML = `<pre aria-label="site directory">${out}</pre>`;
