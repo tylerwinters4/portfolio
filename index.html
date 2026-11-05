@@ -79,6 +79,60 @@
   .doc .entry-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 16px; font-weight: 700; margin-bottom: 4px; }
   .doc .entry-head span:last-child { font-weight: 400; color: var(--muted); }
 
+  .doc h3 {
+    font-size: 1em;
+    font-weight: 700;
+    margin: 22px 0 6px;
+    color: var(--file);
+  }
+
+  /* project images */
+  .doc figure { margin: 14px 0 22px; }
+  .doc figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--rule);
+  }
+  .doc figcaption {
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: 0.875em;
+    max-width: 70ch;
+  }
+  .doc .figs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 0 16px;
+    align-items: start;
+  }
+  .doc .figs figure { margin-top: 14px; }
+  /* shown in place of an image that fails to load */
+  .doc .missing {
+    border: 1px dashed var(--rule);
+    padding: 28px 12px;
+    color: var(--muted);
+    font-size: 0.875em;
+    overflow-wrap: anywhere;
+  }
+  .doc .more { margin-top: 24px; }
+
+  /* embedded video, kept at 16:9 */
+  .doc .video {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    margin: 14px 0 6px;
+    border: 1px solid var(--rule);
+    background: var(--rule);
+  }
+  .doc .video iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
   .back { display: inline-block; margin-top: 36px; color: var(--folder); }
 
   /* contact form */
@@ -130,22 +184,71 @@ const SITE = {
 };
 
 /* ==========================================================
+   IMAGES: every photo lives in the images/ folder next to
+   index.html. fig() draws one captioned image, figs() lays
+   several side by side. If an image can't load, its path is
+   shown instead so you know which file is missing.
+   ========================================================== */
+const IMG = {
+  e_museum: "images/kidplaying.jpg",
+  e_final: "images/structurefront.jpg",
+  e_side: "images/structureside.jpg",
+  e_sketch: "images/sketchog.png",
+  e_lofi_front: "images/lowfidelfront.jpg",
+  e_lofi_top: "images/lowfideltop.jpg",
+  e_hifi_front: "images/highfidelside.jpg",
+  e_list: "images/easylist.png",
+  e_dry_top: "images/dryruntop.jpg",
+  e_dry_back: "images/dryrunside.jpg",
+  e_graph: "images/chart.png",
+  e_edp: "images/timespent.png",
+  e_flow: "images/flowchart.png",
+  e_led: "images/insidelight.jpg",
+  e_mr_drawing: "images/marblerun.png",
+  e_layers: "images/sidemarble.jpg",
+  e_mr_start: "images/topmarble.jpg",
+  e_mr_end: "images/endmarble.jpg",
+  r_front: "images/frontrubegoldberg.png",
+  r_back: "images/backrubegoldberg.png",
+  r_p1: "images/frontproto1.jpg",
+  r_p2: "images/frontproto2.jpg",
+  r_cad: "images/audocadrubegoldberg.png",
+  r_screen: "images/frontscreenautocad.png",
+  r_sides: "images/sidescreenautocad.png",
+  r_slab: "images/slabbackboardpulleyautocad.png",
+  r_blocks: "images/blocksautocad.png",
+  r_ramp: "images/planeautocad.png",
+  r_flow: "images/flowchartrubegoldberg.png",
+};
+
+function fig(src, caption) {
+  return `<figure>
+    <img src="${src}" alt="${caption}" loading="lazy" referrerpolicy="no-referrer"
+         onerror="this.outerHTML='<div class=&quot;missing&quot;>[image not found: ${src}]</div>'">
+    <figcaption>${caption}</figcaption>
+  </figure>`;
+}
+function figs(...items) {
+  return `<div class="figs">${items.join("")}</div>`;
+}
+
+/* ==========================================================
    CONTENT: each folder holds files; each file is a function
    that returns HTML. Add or remove entries freely and the
    tree rebuilds itself.
    ========================================================== */
 const FOLDERS = [
   {
-    dir: "about me",
+    dir: "About Me",
     files: [
       {
-        name: "intro.txt",
+        name: "Intro",
         render: () => `
           <div class="doc">
-            <h2>hi, i’m Tyler.</h2>
+            <h2>Hi, I’m Tyler.</h2>
             <p>I’m a 2nd-year mechanical engineering student at Northeastern University based in ${SITE.location}. I love designing things that can be used in real-life situations to help people in their everyday lives.</p>
             <p>Right now I’m focused on CAD design, electronics, and manufacturing. I care about meeting client requirements, testing prototypes, and learning new skills.</p>
-            <h2>tools i use</h2>
+            <h2>Tools I Use</h2>
             <ul>
               <li>CAD &amp; 3D: SolidWorks, AutoCAD, Blender</li>
               <li>Electronics: Arduino Uno, Raspberry Pi, LED lighting systems</li>
@@ -153,21 +256,21 @@ const FOLDERS = [
               <li>Fabrication: 3D printing, laser cutting</li>
               <li>Media: After Effects, Photoshop</li>
             </ul>
-            <h2>find me</h2>
+            <h2>Find Me</h2>
             <ul>
               <li><a href="${SITE.github}">github</a></li>
               <li><a href="${SITE.linkedin}">linkedin</a></li>
-              <li><a href="#/contact/email_me.txt">email me</a></li>
+              <li><a href="#/Contact/Email%20Me">email me</a></li>
             </ul>
           </div>`
       },
       {
-        name: "education.txt",
+        name: "Education",
         render: () => `
           <div class="doc">
             <div class="entry-head"><span>Northeastern University</span><span>expected May 2029</span></div>
             <p class="muted">B.S. Mechanical Engineering · Boston, MA · GPA 3.91</p>
-            <h2>relevant coursework</h2>
+            <h2>Relevant Coursework</h2>
             <ul>
               <li>Thermodynamics</li>
               <li>Fluid Mechanics (in progress)</li>
@@ -181,22 +284,30 @@ const FOLDERS = [
     ]
   },
   {
-    dir: "resume",
+    dir: "Resume",
     files: [
       // opens the PDF directly in a new tab (no page in between)
-      { name: "resume.pdf", href: SITE.resumePdf }
+      { name: "Resume", href: SITE.resumePdf }
     ]
   },
   {
-    dir: "projects",
+    dir: "Projects",
     files: [
       {
-        name: "quadruped_robot.txt",
+        name: "Quadruped Robot",
         render: () => `
           <div class="doc">
-            <div class="entry-head"><span>quadruped walking robot</span><span>Sept 2026 – present</span></div>
+            <div class="entry-head"><span>Quadruped Walking Robot</span><span>Sept 2026 – present</span></div>
             <p class="muted">3-person team · stack: SolidWorks, Arduino, C++</p>
             <p>A four-legged robot that walks using a controller and servo motors built into its legs and body. It also has a screen that displays text and designs based on the action the robot is performing. I designed the legs and am currently working on the body.</p>
+
+            <h2>My Goal</h2>
+            <!-- EDIT: replace with your own goal in your own words -->
+            <p>Design a leg that’s strong and light enough for the servos to lift the robot’s full weight, with joints that give each leg the range of motion it needs for a stable walking gait. Beyond this build, I want to get comfortable taking a mechanism from a SolidWorks model all the way to a moving prototype.</p>
+
+            ${fig("images/quadruped_leg.png", "Finished leg assembly in SolidWorks.")}
+
+            <h2>What I Did</h2>
             <ul>
               <li>Designed the motorized legs in SolidWorks</li>
               <li>Programmed servo motor orientations to move the legs</li>
@@ -204,10 +315,10 @@ const FOLDERS = [
           </div>`
       },
       {
-        name: "volleyball_dispenser.txt",
+        name: "Volleyball Dispenser",
         render: () => `
           <div class="doc">
-            <div class="entry-head"><span>automatic volleyball dispenser</span><span>June – Aug 2026</span></div>
+            <div class="entry-head"><span>Automatic Volleyball Dispenser</span><span>June – Aug 2026</span></div>
             <p class="muted">personal project · stack: Arduino, PVC piping</p>
             <p>A fully automatic ball dispenser: a sensor detects when a ball is needed and a motorized system feeds the next one through a PVC pipe structure.</p>
             <ul>
@@ -218,45 +329,169 @@ const FOLDERS = [
           </div>`
       },
       {
-        name: "everglades_hide_and_seek.txt",
+        name: "Everglades Hide and Seek",
         render: () => `
           <div class="doc">
-            <div class="entry-head"><span>everglades 3D hide and seek game</span><span>Jan – May 2026</span></div>
-            <p class="muted">cornerstone group project · stack: AutoCAD, 3D printing, Raspberry Pi</p>
-            <p>An interactive replica of the Everglades where kids search for hidden animals, exhibited at the Boston Children’s Museum.</p>
+            <div class="entry-head"><span>Everglades 3D Hide and Seek Game</span><span>Jan – May 2026</span></div>
+            <p class="muted">cornerstone group project · 4-person team · stack: AutoCAD, laser cutting, 3D printing, Raspberry Pi</p>
+            <p>An interactive, three-layer model of Everglades National Park where kids race to find hidden animals and fossils, exhibited at the Boston Children’s Museum. Our team was also elected to the class Executive Board, so we oversaw our classmates’ projects and built a traveling artifact with a final prize.</p>
+
+            ${fig(IMG.e_museum, "A player at the museum finds an animal from their list.")}
+
+            <h2>Goal</h2>
+            <p>Build an educational, interactive game for children that shows off the Everglades’ karst landforms and introduces younger kids to environmental conservation.</p>
+
+            <h2>How It Works</h2>
             <ul>
-              <li>Modeled a 3-layer cardboard and papier-mâché replica of the Everglades in AutoCAD</li>
-              <li>Presented the exhibit to 28 children at the Boston Children’s Museum</li>
-              <li>3D-printed 22 animals and hid them throughout the structure for the children to find</li>
-              <li>Created rock formations, painted the model, added grass, and designed a water-themed marble run for interactivity</li>
-              <li>Programmed and wired an interior lighting system using Raspberry Pi firmware and LED strips</li>
+              <li>Players pick a scavenger-hunt list and are timed while they find every animal and fossil on it, hidden across all three layers</li>
+              <li>Six lists scale in difficulty by number of animals, plus a master list with all 22</li>
+              <li>A marble-run river starts on the top layer, winds through the structure, and ends in a basin</li>
+              <li>An arcade button lights LEDs along the cave ceiling, giving kids too young for the hunt something to do</li>
             </ul>
+            ${figs(
+              fig(IMG.e_final, "Front of the final model at the museum."),
+              fig(IMG.e_side, "Side of the final model at the museum.")
+            )}
+
+            <h2>Design Process</h2>
+            <h3>Brainstorming</h3>
+            <p>We wanted a game that highlighted the park’s land features, so we settled on a 3D model with small animal figures hidden throughout. A first sketch set the layout for everything that followed.</p>
+            ${fig(IMG.e_sketch, "Original concept sketch.")}
+
+            <h3>Low-Fidelity Prototype</h3>
+            <p>We built the base structure with its rock features, finished the cave interiors, and tested our papier-mâché technique, which gave a convincingly natural look. The first marble run didn’t work reliably, so we decided to redraw it precisely in AutoCAD.</p>
+            ${figs(
+              fig(IMG.e_lofi_front, "Front, with the first marble run and partial papier-mâché."),
+              fig(IMG.e_lofi_top, "Top, with an unpainted 3D-printed animal.")
+            )}
+
+            <h3>High-Fidelity Prototype</h3>
+            <p>The model was fully papier-mâchéd and painted to match the terrain on each face. We added the rebuilt marble run, the light and button system, and the river basin, then wrote the six difficulty-graded lists.</p>
+            ${figs(
+              fig(IMG.e_hifi_front, "Front, with painted walls and the final marble run."),
+              fig(IMG.e_list, "An easy-difficulty scavenger list.")
+            )}
+
+            <h3>Dry Run</h3>
+            <p>We finished the decorations: painted animals, moss, rocks, and paper strips for water. From prototype feedback we added the 22-animal master list, and set the model on a wooden box on the floor so it sat at a child’s eye level instead of on a table. A full test confirmed everything worked before the move to the museum.</p>
+            ${figs(
+              fig(IMG.e_dry_top, "Top, with the finished marble run and painted animals."),
+              fig(IMG.e_dry_back, "Back, with rock formations and the bottom of the marble run.")
+            )}
+
+            <h3>Exhibit and Reflection</h3>
+            <p>Kids and adults found the game both fun and educational. We tracked how many players chose each list: the master list was the most popular, followed by easy, which younger kids and their grown-ups tended to pick. The one problem was that we underestimated demand for the master list, and a short line formed at the busiest point because finding all 22 animals took longer than planned.</p>
+            ${figs(
+              fig(IMG.e_graph, "Players per list difficulty at the museum."),
+              fig(IMG.e_edp, "Hours spent in each phase of the engineering design process.")
+            )}
+
+            <h2>Technical Components</h2>
+            <h3>LED Strip and Button</h3>
+            <p>An arcade button wired to a Raspberry Pi switches on an LED strip along the ceiling of the middle-layer cave.</p>
+            ${figs(
+              fig(IMG.e_flow, "Pseudocode flowchart for the button and LED strip."),
+              fig(IMG.e_led, "The middle layer lit up, with the button, marble run, and rocks.")
+            )}
+
+            <h3>Marble Run</h3>
+            <p>Three of the four track sections were drawn in AutoCAD and laser-cut from cardboard: one on the top layer and two on the middle. Track walls are 0.5 in tall to keep the marble on course. Each track’s length and width fit the structure, while the curves were shaped by eye. The simpler bottom section was cut by hand and drains into a basin that extends out from the model.</p>
+            ${fig(IMG.e_mr_drawing, "AutoCAD technical drawing of the laser-cut marble run tracks.")}
+            ${fig(IMG.e_layers, "Middle layer (laser-cut track) above the bottom layer (hand-cut track).")}
+            ${figs(
+              fig(IMG.e_mr_start, "The start of the run on the top layer."),
+              fig(IMG.e_mr_end, "The end of the run in the basin.")
+            )}
+
+            <h2>My Contributions</h2>
+            <ul>
+              <li>Modeled the 3-layer cardboard and papier-mâché replica in AutoCAD</li>
+              <li>3D-printed the 22 animals and hid them throughout the structure</li>
+              <li>Built rock formations, painted the model, added grass, and designed the water-themed marble run</li>
+              <li>Programmed and wired the interior lighting system with Raspberry Pi firmware and LED strips</li>
+              <li>Presented the exhibit to 28 children at the Boston Children’s Museum</li>
+            </ul>
+
+            <p class="more">Full write-up: <a href="https://sites.google.com/husky.neu.edu/funlabsportfolio/home">Fun Labs! project site</a></p>
           </div>`
       },
       {
-        name: "force_transport_system.txt",
+        name: "Force Transport System",
         render: () => `
           <div class="doc">
-            <div class="entry-head"><span>force transport system</span><span>Sept – Dec 2025</span></div>
-            <p class="muted">cornerstone group project · stack: AutoCAD, laser cutting, Raspberry Pi</p>
-            <p>A fully automatic system that moves an object through a chain of mechanical stages.</p>
+            <div class="entry-head"><span>Force Transport System</span><span>Sept – Dec 2025</span></div>
+            <p class="muted">cornerstone group project · 4-person team · stack: AutoCAD, laser cutting, Raspberry Pi</p>
+            <p>Our section of a class-wide, playroom-themed Rube Goldberg machine. A marble triggers a lit-up cardboard computer, then drops into a pulley that tips a Rubik’s Cube down a ramp into the next team’s section. We designed and built every part ourselves except the marble run track, including the 12 × 14 in computer.</p>
+
+            ${figs(
+              fig(IMG.r_front, "Front of the final machine at the First Year Expo."),
+              fig(IMG.r_back, "Back of the final machine.")
+            )}
+
+            <h2>Goal</h2>
+            <p>Build an entertaining, reliable section of the class machine that fits the playroom theme and hands off cleanly to the teams on either side of us.</p>
+
+            <h2>How It Works</h2>
+            <ul>
+              <li>A string from the previous section flips a hinge, dropping a marble into our marble run</li>
+              <li>The marble falls from a funnel onto a button, which lights an LED strip on the cardboard computer</li>
+              <li>It rolls through more track and lands in a box on a pulley</li>
+              <li>The pulley lifts a slab under a Rubik’s Cube, which slides down an inclined plane into the next section</li>
+            </ul>
+
+            <h2>Design Process</h2>
+            <h3>Prototype I</h3>
+            <p>We drew on toys from our own childhoods: a marble run, a Rubik’s Cube, and a computer. The cardboard computer with LEDs timed to the marble, the pulley, and the inclined plane all worked and carried into the final build. A homemade whoopee cushion didn’t, and we simplified the pulley to a single box opposite the slab that lifts the cube.</p>
+            ${fig(IMG.r_p1, "Prototype I, front.")}
+
+            <h3>Prototype II</h3>
+            <p>We added a string-pulled cardboard dish that hinges forward to start our section, connecting us to the team before ours. The cube couldn’t hit the whoopee cushion hard enough to deflate it, so we dropped it and sent the cube straight into the next section. We painted the pulley box as an alphabet block, made the pulley sturdier, and finalized the button and LED code.</p>
+            ${fig(IMG.r_p2, "Prototype II, front.")}
+
+            <h3>Final Machine</h3>
+            <p>A dowel now adds directional tension to the incoming string so a new metal hinge flips reliably. Poles on both sides of the ramp keep the cube sliding straight into the next section, and two added supports steady the marble run towers. We finished the playroom decorations, color-coded the towers, and replaced a broken LED strip with a longer one.</p>
+
+            <h2>Technical Components</h2>
+            <h3>AutoCAD and Laser Cutting</h3>
+            <p>Every structural part was drawn in AutoCAD and laser-cut: the computer’s front screen and side pieces, the slab, the funnel’s backboard, the pulley wheels and blocks, and the inclined plane.</p>
+            ${fig(IMG.r_cad, "Final AutoCAD drawing.")}
+            ${figs(
+              fig(IMG.r_screen, "Computer front screen."),
+              fig(IMG.r_sides, "Computer side pieces."),
+              fig(IMG.r_slab, "Slab, funnel backboard, and pulley wheels."),
+              fig(IMG.r_blocks, "Pulley blocks."),
+              fig(IMG.r_ramp, "Inclined plane.")
+            )}
+
+            <h3>Button and LED Code</h3>
+            <ul>
+              <li>Imports the time, machine, and neopixel libraries and assigns pins for the LED strip and button</li>
+              <li>Loops forever, checking whether the button is pressed</li>
+              <li>On a press, waits while the marble rolls into the funnel under the breadboard</li>
+              <li>Lights each pixel red one at a time, then fills the whole strip green</li>
+            </ul>
+            ${fig(IMG.r_flow, "Pseudocode flowchart.")}
+
+            <h2>My Contributions</h2>
             <ul>
               <li>Designed the system in AutoCAD and built it from laser-cut materials</li>
               <li>Implemented 4 mechanical components: a pulley, inclined plane, funnel, and hinge</li>
-              <li>Programmed a button and lighting system with Raspberry Pi firmware to sync with the end of our section</li>
+              <li>Programmed the button and lighting system with Raspberry Pi firmware to sync with the end of our section</li>
             </ul>
+
+            <p class="more">Full write-up and videos: <a href="https://sites.google.com/husky.neu.edu/rubegoldbergmachine-project/home">Rube Goldberg machine project site</a></p>
           </div>`
       }
     ]
   },
   {
-    dir: "experience",
+    dir: "Experience",
     files: [
       {
-        name: "video_editor.txt",
+        name: "Video Editor",
         render: () => `
           <div class="doc">
-            <div class="entry-head"><span>video editor</span><span>Sept 2023 – present</span></div>
+            <div class="entry-head"><span>Video Editor</span><span>Sept 2023 – present</span></div>
             <p class="muted">YouTube, Instagram</p>
             <ul>
               <li>Produced professional-level videos that grew viewership by over 250,000 viewers across platforms</li>
@@ -264,13 +499,25 @@ const FOLDERS = [
               <li>Used Blender 3D modeling and animation to boost viewer retention</li>
               <li>Scripted 300+ short-form videos that led to a 95% follower increase</li>
             </ul>
+
+            <h2>Client Project</h2>
+            <p>An example of a video a client asked me to make.</p>
+            <div class="video">
+              <iframe src="https://www.youtube-nocookie.com/embed/TK7V1xkNamo"
+                      title="Client video project by Tyler Winters"
+                      loading="lazy"
+                      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerpolicy="strict-origin-when-cross-origin"
+                      allowfullscreen></iframe>
+            </div>
+            <p class="note">Video not loading? <a href="https://youtu.be/TK7V1xkNamo">Watch it on YouTube</a>.</p>
           </div>`
       },
       {
-        name: "academic_tutor.txt",
+        name: "Academic Tutor",
         render: () => `
           <div class="doc">
-            <div class="entry-head"><span>academic tutor</span><span>Sept 2022 – Aug 2025</span></div>
+            <div class="entry-head"><span>Academic Tutor</span><span>Sept 2022 – Aug 2025</span></div>
             <p class="muted">Hillmont Tutors · Ellicott City, MD</p>
             <ul>
               <li>Designed over 500 math problems for six 4th- and 5th-graders to help them move into advanced courses in middle school</li>
@@ -279,10 +526,10 @@ const FOLDERS = [
           </div>`
       },
       {
-        name: "volunteering.txt",
+        name: "Volunteering",
         render: () => `
           <div class="doc">
-            <div class="entry-head"><span>animal care and organization</span><span>Sept 2023 – Dec 2025</span></div>
+            <div class="entry-head"><span>Animal Care and Organization</span><span>Sept 2023 – Dec 2025</span></div>
             <p class="muted">Cats on the Grove · Catonsville, MD</p>
             <ul>
               <li>Led food management for a colony of around 20 feral cats</li>
@@ -293,10 +540,10 @@ const FOLDERS = [
     ]
   },
   {
-    dir: "contact",
+    dir: "Contact",
     files: [
       {
-        name: "email_me.txt",
+        name: "Email Me",
         render: () => `
           <div class="doc">
             <p>Questions, project ideas, or job opportunities: write to <a href="mailto:${SITE.email}">${SITE.email}</a>, or use the form below.</p>
@@ -378,7 +625,7 @@ function renderFile(dirName, fileName) {
   app.innerHTML = `
     <p class="prompt">~/${esc(dirName)}$ <b>cat ${esc(fileName)}</b></p>
     ${file.render()}
-    <a class="back" href="#/">cd ..</a>`;
+    <a class="back" href="#/">Back</a>`;
   if (file.after) file.after();
 }
 
