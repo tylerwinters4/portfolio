@@ -59,10 +59,6 @@
   .file { color: var(--file); }
   .muted { color: var(--muted); }
 
-  /* "terminal" header on file pages */
-  .prompt { color: var(--muted); margin: 0 0 20px; overflow-wrap: anywhere; }
-  .prompt b { color: var(--text); font-weight: 700; }
-
   .doc { white-space: normal; }
   .doc h2 {
     font-size: 1em;
@@ -630,7 +626,6 @@ function renderFile(dirName, fileName) {
   if (!file) { renderTree(); return; }
   document.title = `${fileName} | ${SITE.name}`;
   app.innerHTML = `
-    <p class="prompt">~/${esc(dirName)}$ <b>cat ${esc(fileName)}</b></p>
     ${file.render()}
     <a class="back" href="#/">Back</a>`;
   if (file.after) file.after();
