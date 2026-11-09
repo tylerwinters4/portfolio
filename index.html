@@ -113,7 +113,7 @@
   }
   .doc .more { margin-top: 24px; }
 
-  /* embedded video, kept at 16:9 */
+  
   .doc .video {
     position: relative;
     aspect-ratio: 16 / 9;
@@ -167,24 +167,17 @@
 <main id="app"></main>
 
 <script>
-/* ==========================================================
-   EDIT THIS SECTION: your details live here
-   ========================================================== */
+
 const SITE = {
   name: "Tyler Winters",
   email: "winters.ty@northeastern.edu",
   github: "https://github.com/tylerwinters4",
   linkedin: "https://linkedin.com/in/tylerwinters4",
   location: "Boston, MA",
-  resumePdf: "resume.pdf"                      // drop a PDF named this in the repo, or delete the link below
+  resumePdf: "resume.pdf"                      
 };
 
-/* ==========================================================
-   IMAGES: every photo lives in the images/ folder next to
-   index.html. fig() draws one captioned image, figs() lays
-   several side by side. If an image can't load, its path is
-   shown instead so you know which file is missing.
-   ========================================================== */
+
 const IMG = {
   e_museum: "images/kidplaying.jpg",
   e_final: "images/structurefront.jpg",
@@ -228,11 +221,7 @@ function figs(...items) {
   return `<div class="figs">${items.join("")}</div>`;
 }
 
-/* ==========================================================
-   CONTENT: each folder holds files; each file is a function
-   that returns HTML. Add or remove entries freely and the
-   tree rebuilds itself.
-   ========================================================== */
+
 const FOLDERS = [
   {
     dir: "About Me",
@@ -282,7 +271,7 @@ const FOLDERS = [
   {
     dir: "Resume",
     files: [
-      // opens the PDF directly in a new tab (no page in between)
+      
       { name: "Resume", href: SITE.resumePdf }
     ]
   },
@@ -593,9 +582,6 @@ const FOLDERS = [
   }
 ];
 
-/* ==========================================================
-   ENGINE: draws the tree and shows files. No need to edit.
-   ========================================================== */
 const app = document.getElementById("app");
 
 function esc(s) {
